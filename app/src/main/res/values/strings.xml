@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">GithubUser</string>
+    <string name="search">search</string>
+    <string name="search_hint">Cari User</string>
+    <string name="tab_text1">Followers</string>
+    <string name="tab_text2">Following</string>
+    <!-- TODO: Remove or change this placeholder text -->
+</resources>
