@@ -1,4 +1,4 @@
-package com.example.githubuser
+package com.example.githubuser.ui.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubuser.adapter.UserAdapter
 import com.example.githubuser.databinding.FragmentFollowBinding
 import com.example.githubuser.datamodel.ItemsItem
+import com.example.githubuser.ui.ViewModelFactory
 
 class FollowFragment : Fragment() {
     companion object{
@@ -31,8 +33,9 @@ class FollowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this,ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
 
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(this, factory)[DetailUserViewModel::class.java]
 
         viewModel.isLoading.observe(viewLifecycleOwner){
                 showLoading(it)

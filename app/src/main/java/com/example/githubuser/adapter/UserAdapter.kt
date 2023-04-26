@@ -1,4 +1,4 @@
-package com.example.githubuser
+package com.example.githubuser.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,7 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.githubuser.R
 import com.example.githubuser.datamodel.ItemsItem
+import com.example.githubuser.ui.detail.DetailUser
 
 class UserAdapter(private val listUser: List<ItemsItem>): RecyclerView.Adapter<UserAdapter.ViewHolder>(){
 
@@ -26,6 +28,7 @@ class UserAdapter(private val listUser: List<ItemsItem>): RecyclerView.Adapter<U
         holder.itemView.setOnClickListener{
             val intentDetail = Intent(holder.itemView.context, DetailUser::class.java)
             intentDetail.putExtra(DetailUser.EXTRA_DETAIL, data.login)
+            intentDetail.putExtra(DetailUser.AVATAR_DETAIL, data.avatarUrl)
             holder.itemView.context.startActivity(intentDetail)
         }
     }

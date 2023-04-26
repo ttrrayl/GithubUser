@@ -1,17 +1,21 @@
-package com.example.githubuser
+package com.example.githubuser.ui.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.githubuser.datamodel.DetailUserResponse
 import com.example.githubuser.datamodel.ItemsItem
+import com.example.githubuser.data.GithubUserRepository
 import com.example.githubuser.retrofit.ApiConfig
+import com.example.githubuser.room.GithubUser
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailUserViewModel : ViewModel() {
+class DetailUserViewModel(private val mGithubUserRepository: GithubUserRepository) : ViewModel() {
 
     private val _detailUser= MutableLiveData<DetailUserResponse>()
     val detailUser: LiveData<DetailUserResponse> = _detailUser
@@ -25,11 +29,12 @@ class DetailUserViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isFavorite = MutableLiveData<Boolean>()
+    val isFavorite: LiveData<Boolean> = _isFavorite
+
     companion object{
         private const val TAG = "DetailUserViewModel"
     }
-
-
 
     fun getDetail(username: String){
         _isLoading.value = true
@@ -108,6 +113,24 @@ class DetailUserViewModel : ViewModel() {
             }
         })
     }
+
+
+    fun insert(favorite: GithubUser){
+        mGithubUserRepository.insert(favorite)
+    }
+
+    fun delete(favorite: GithubUser){
+        mGithubUserRepository.delete(favorite)
+
+    }
+
+
+
+    fun getUserFavorite(username: String) = mGithubUserRepository.getUserFavorite(username)
+
+
+
+
 
 
 }

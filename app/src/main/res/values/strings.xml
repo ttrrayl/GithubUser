@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">GithubUser</string>
+    <string name="app_name">Github User</string>
     <string name="search">search</string>
     <string name="search_hint">Cari User</string>
     <string name="tab_text1">Followers</string>
     <string name="tab_text2">Following</string>
+    <string name="favorite">Favorite</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="setting">Setting</string>
+    <string name="title_bar">Favorite User</string>
+    <string name="change_theme">Pilih Mode Device</string>
+    <string name="url_splash">https://logos-world.net/wp-content/uploads/2020/11/GitHub-Symbol.png</string>
+    <string name="avatar_user">Avatar User</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

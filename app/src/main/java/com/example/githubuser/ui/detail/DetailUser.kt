@@ -1,14 +1,19 @@
-package com.example.githubuser
+package com.example.githubuser.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.githubuser.R
+import com.example.githubuser.adapter.SectionPageAdapter
 import com.example.githubuser.databinding.ActivityDetailUserBinding
 import com.example.githubuser.datamodel.DetailUserResponse
+import com.example.githubuser.room.GithubUser
+import com.example.githubuser.ui.ViewModelFactory
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -19,6 +24,7 @@ class DetailUser : AppCompatActivity() {
 
     companion object{
         const val EXTRA_DETAIL = "extra_detail"
+        const val AVATAR_DETAIL = "avatar_detail"
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_text1,
@@ -31,16 +37,20 @@ class DetailUser : AppCompatActivity() {
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailUserViewModel::class.java)
-        viewModel.detailUser.observe(this, {
-            detail_User -> setDetailUser(detail_User)
-        })
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this@DetailUser)
+        viewModel = ViewModelProvider(this, factory)[DetailUserViewModel::class.java]
+
+        viewModel.detailUser.observe(this) { detail_User ->
+            setDetailUser(detail_User)
+        }
         viewModel.isLoading.observe(this,{
             showLoading(it)
         })
 
         val username = intent.getStringExtra(EXTRA_DETAIL)
+        val avatar = intent.getStringExtra(AVATAR_DETAIL)
         username?.let { viewModel.getDetail(it) }
+
 
         val sectionsPagerAdapter = SectionPageAdapter(this)
         sectionsPagerAdapter.username = username.toString()
@@ -50,6 +60,23 @@ class DetailUser : AppCompatActivity() {
         TabLayoutMediator(tabs, viewPager){
             tab,position -> tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+
+
+        username?.let{ viewModel.getUserFavorite(it) }?.observe(this){
+            if (it != null){
+                binding.butFab.setImageResource(R.drawable.ic_favorite)
+                binding.butFab.setOnClickListener{
+                    val mUser = GithubUser(username.toString(),avatar.toString())
+                    viewModel.delete(mUser)
+                }
+            } else{
+                binding.butFab.setImageResource(R.drawable.ic_favorite_border)
+                binding.butFab.setOnClickListener{
+                    val mUser = GithubUser(username.toString(),avatar.toString())
+                    viewModel.insert(mUser)
+                }
+            }
+        }
 
         supportActionBar?.elevation = 0f
     }
@@ -69,4 +96,6 @@ class DetailUser : AppCompatActivity() {
             .into(binding.imageProfil)
 
     }
+
+
 }

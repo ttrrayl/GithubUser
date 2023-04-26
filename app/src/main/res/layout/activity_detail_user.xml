@@ -5,20 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".DetailUser">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    tools:context=".ui.detail.DetailUser">
 
         <LinearLayout
             android:id="@+id/layout_viewgroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -102,16 +94,16 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"/>
+                android:layout_height="350dp"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/but_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_favorite" />
 
         </LinearLayout>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 </ScrollView>
